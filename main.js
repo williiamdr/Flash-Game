@@ -5,19 +5,21 @@
 // Create a function to make luigi.png jump 
 // Create a function when game is over 
 
-const luigi = document.getElementById("luigi");
-const bullet = document.getElementById("bullet");
+let board;
+let boardWidth = 750;
+let boardHeight = 250;
+let context;
 
-function jump (){
-    luigi.classList.add("jump");
+let luigiWidth = 100;
+let luigiHeight = 105;
+let luigiX = 50;
+let luigiY = boardHeight - luigiHeight;
+let luigiImg;
 
-    setTimeout(function (){
-        luigi.classList.remove("jump");
-    }, 300);
-}
-
-
-document.addEventListener("keydown", function(event) {
-jump();
-})
+let luigi = {
+    x: luigiX,
+    y: luigiY,
+    width: luigiWidth,
+    height: luigiHeight
+};
 
