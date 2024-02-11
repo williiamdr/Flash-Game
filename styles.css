@@ -1,9 +1,21 @@
 body {
     font-family:'Times New Roman', Times, serif;
     text-align: center;
+    background-image: url("./img/background-img.webp");
+   background-size: cover;
+   background-repeat: no-repeat;
+  
 }
 
 #board {
-    background-color: yellowgreen;
-    border-bottom: 1px solid black;
+    background-color: rgb(249, 249, 249)5, 255);
+    
+}
+
+h1, h2, p {
+    color: white;
+    padding: 5px; 
+    display: inline-block; 
+    border-radius: 5px; 
+    font-weight: bolder;
 }

@@ -5,10 +5,26 @@
 // Create a function to make luigi.png jump 
 // Create a function when game is over 
 
+
+// Game 
+
 let board;
-let boardWidth = 750;
-let boardHeight = 250;
+let boardWidth = 850;
+let boardHeight = 350;
 let context;
+
+// let cloudImg;
+// let cloudWidth = 750;
+// let cloudHeight = 100;
+// let cloudX = 0;
+// let cloudY = 0;
+
+let backgroundImg;
+let backgroundWidth = 850;
+let backgroundHeight = 350; 
+let backgroundX = 0;
+let backgroundY = 0;
+// Main character 
 
 let luigiWidth = 100;
 let luigiHeight = 105;
@@ -22,6 +38,9 @@ let luigi = {
     width: luigiWidth,
     height: luigiHeight
 };
+
+
+// Enemies Character 
 
 let enemyArray = [];
 
@@ -41,19 +60,41 @@ let velocityX = -8;
 let velocityY = 0;
 let gravity = 0.4;
 
+// Game Basics 
+
 let gameOver = true;
 let score = 0;
 
-let music = new Audio('./music/Super Mario 64 Slider Race Theme Song.mp3');
-music.addEventListener('error', function(e) {
-    console.error('Error occurred while loading the audio:', e);
+// Added music to when the game starts 
+
+let mySound = new Audio('./music/Super Mario 64 Slider Race Theme Song.mp3')
+mySound.play()
+function startPlaying() {
+
+    mySound.play();
+}
+document.addEventListener('keydown', function(event) {
+    
+    if (event.keyCode === 32) { 
+        event.preventDefault();
+        
+        startPlaying();
+    }
 });
+
+// When page is loaded 
+// Retrieved from MDN Window: Load Event 
+// Following function is to create the characters 
 window.onload = function () {
     board = document.getElementById("board");
     board.height = boardHeight;
     board.width = boardWidth;
 
     context = board.getContext("2d");
+
+    backgroundImg = new Image(); 
+    backgroundImg.src = "./img/canvas-background.jpg";
+
 
     luigiImg = new Image();
     luigiImg.src = "./img/luigi.png";
@@ -69,32 +110,44 @@ window.onload = function () {
 
     // Display title
     context.fillStyle = "black";
-    context.font = "20px courier";
+    context.font = "bold 25px courier";
     context.fillText("Press any key to begin dodging", boardWidth / 4, boardHeight / 2);
 
-    // Add event listener for keydown event to start the game
     document.addEventListener("keydown", startGame);
 };
 
+// Start the game loop only if it's not already started
 function startGame(event) {
-    // Start the game loop only if it's not already started
+    
     if (gameOver) {
         gameOver = false;
         document.removeEventListener("keydown", startGame);
         setInterval(placeEnemy, 1000);
         requestAnimationFrame(update);
         document.addEventListener("keydown", moveLuigi);
-        playMusic();
+        
     }
 }
 
-function update() {
-    if (gameOver) return;
 
+ // To add on the board 
+
+function update() {
+    if (gameOver) {
+        mySound.pause(); // Stop the music when game is over
+        return;
+    }
     context.clearRect(0, 0, board.width, board.height);
     velocityY += gravity;
+
+    context.drawImage(backgroundImg, backgroundX, backgroundY, backgroundWidth, backgroundHeight);
+
+  
+
     luigi.y = Math.min(luigi.y + velocityY, luigiY);
     context.drawImage(luigiImg, luigi.x, luigi.y, luigi.width, luigi.height);
+
+
 
     for (let i = 0; i < enemyArray.length; i++) {
         let enemy = enemyArray[i];
@@ -114,6 +167,8 @@ function update() {
     requestAnimationFrame(update);
 }
 
+// Character movement
+
 function moveLuigi(e) {
     if (gameOver) return;
 
@@ -121,6 +176,8 @@ function moveLuigi(e) {
         velocityY = -10;
     }
 }
+
+// Spawning of enemies randomly with math.random
 
 function placeEnemy() {
     if (gameOver) return;
@@ -153,6 +210,8 @@ function placeEnemy() {
         enemyArray.shift();
     }
 }
+
+// Was able to achieve collision thanks to Stack Over Flow coding website ps. it was so tough :C
 
 function detectCollision(a, b) {
     return (
