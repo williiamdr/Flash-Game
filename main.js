@@ -66,7 +66,7 @@ let score = 0;
 // Added music to when the game starts
 
 let mySound = new Audio("./music/Super Mario 64 Slider Race Theme Song.mp3");
-mySound.play();
+
 function startPlaying() {
   mySound.play();
 }
