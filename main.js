@@ -189,10 +189,8 @@ function restartGame() {
   velocityY = 0;
   enemyArray = [];
 
-  // Remove event listener for restart button
   board.removeEventListener("click", restartGame);
 
-  // Start the game again
   requestAnimationFrame(update);
 }
 
@@ -201,7 +199,7 @@ function restartGame() {
 function moveLuigi(e) {
   if (gameOver) return;
 
-  if ((e.code == "Space" || e.code == "ArrowUp") && luigi.y == luigiY) {
+  if ((e.code == "Space") && luigi.y == luigiY) {
     velocityY = -10;
   }
 }
@@ -235,12 +233,10 @@ function placeEnemy() {
     enemyArray.push(enemy);
   }
 
-  if (enemyArray.length > 5) {
-    enemyArray.shift();
-  }
+  
 }
 
-// Was able to achieve collision thanks to Stack Over Flow coding website ps. it was so tough :C
+// Stack over flow documentation
 
 function detectCollision(a, b) {
   return (
