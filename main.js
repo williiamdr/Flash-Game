@@ -107,7 +107,7 @@ window.onload = function () {
   context.fillStyle = "black";
   context.font = "bold 25px courier";
   context.fillText(
-    "Press any key to begin dodging",
+    "Press Spacebar to begin dodging",
     boardWidth / 4,
     boardHeight / 2
   );
